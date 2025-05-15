@@ -1,18 +1,19 @@
 import { Link } from 'react-router';
 import './Navbar.module.css';
+
 import { ShoppingCart } from 'lucide-react';
 
 function Navbar() {
   return (
     <nav>
       <h1>
-        <a href="/">Kitchen</a>
+        <Link to="/">Kitchen</Link>
       </h1>
-      <a href="/shop">Products</a>
-      <a href="/cart">
+      <Link to="shop">Products</Link>
+      <Link to="cart">
         <ShoppingCart />
         Cart
-      </a>
+      </Link>
     </nav>
   );
 }

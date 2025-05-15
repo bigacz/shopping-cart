@@ -28,9 +28,12 @@ it('has link that redirects to shop', () => {
   expect(link).toHaveAttribute('href', '/shop');
 });
 
-it('has link that redirects to cart', () => {
+it('has link with an icon that redirects to cart', () => {
   render(<Stub />);
 
   const link = screen.getByRole('link', { name: /cart/i });
   expect(link).toHaveAttribute('href', '/cart');
+
+  const icon = link.querySelector('svg');
+  expect(link).toContainElement(icon);
 });
