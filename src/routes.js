@@ -23,9 +23,8 @@ const routes = [
         Component: Cart,
       },
       {
-        path: 'Product',
+        path: 'product/:productId',
         Component: Product,
-        // Dynamic segments
       },
     ],
   },
