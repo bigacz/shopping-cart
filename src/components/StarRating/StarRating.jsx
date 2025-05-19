@@ -20,7 +20,7 @@ function StarRating({ rating }) {
   }
 
   while (stars.length < 5) {
-    stars.push(<Star data-testid="star-empty" />);
+    stars.push(<Star key={stars.length} data-testid="star-empty" />);
   }
 
   return <div>{stars}</div>;
