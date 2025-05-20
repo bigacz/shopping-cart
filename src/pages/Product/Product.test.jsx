@@ -6,6 +6,7 @@ import { expect, it, vi } from 'vitest';
 
 import ReviewsList from 'components/ReviewsList/ReviewsList';
 import StarRating from 'components/StarRating/StarRating';
+import userEvent from '@testing-library/user-event';
 
 vi.mock('components/ReviewsList/ReviewsList');
 vi.mock('components/StarRating/StarRating');
@@ -22,10 +23,12 @@ const products = [
   },
 ];
 
+const addProduct = vi.fn();
+
 const Stub = createRoutesStub([
   {
     path: '/',
-    Component: () => <Outlet context={products} />,
+    Component: () => <Outlet context={{ products, addProduct }} />,
     children: [
       {
         path: 'product/:productId',
@@ -35,8 +38,11 @@ const Stub = createRoutesStub([
   },
 ]);
 
-function renderOnExisitngProduct() {
+function setupOnExisitngProduct() {
+  const user = userEvent.setup();
   render(<Stub initialEntries={['/product/48']} />);
+
+  return { user };
 }
 
 it('renders no product found text when productId is incorrect', () => {
@@ -46,32 +52,32 @@ it('renders no product found text when productId is incorrect', () => {
 });
 
 it('renders image', () => {
-  renderOnExisitngProduct();
+  setupOnExisitngProduct();
 
   const image = screen.getByAltText(/product name/i);
   expect(image).toHaveAttribute('src', 'https://placehold.co/600x400');
 });
 
 it('renders title ', () => {
-  renderOnExisitngProduct();
+  setupOnExisitngProduct();
 
   screen.getByRole('heading', { name: /product name/i });
 });
 
 it('render price', () => {
-  renderOnExisitngProduct();
+  setupOnExisitngProduct();
 
   screen.getByText(/7.99 €/i);
 });
 
 it('renders description', () => {
-  renderOnExisitngProduct();
+  setupOnExisitngProduct();
 
   screen.getByText(/some description text/i);
 });
 
 it('render reviews', () => {
-  renderOnExisitngProduct();
+  setupOnExisitngProduct();
 
   expect(ReviewsList.mock.lastCall[0]).toEqual({
     reviews: 'reviewsExampleValue',
@@ -79,9 +85,18 @@ it('render reviews', () => {
 });
 
 it('render rating', () => {
-  renderOnExisitngProduct();
+  setupOnExisitngProduct();
 
   expect(StarRating.mock.lastCall[0]).toEqual({
     rating: 3.27,
   });
+});
+
+it('renders a button that calls addProduct with current productId', async () => {
+  const { user } = setupOnExisitngProduct();
+
+  const button = screen.getByRole('button', { name: /add to cart/i });
+  await user.click(button);
+
+  expect(addProduct).toHaveBeenLastCalledWith('48');
 });

@@ -5,7 +5,7 @@ import StarRating from 'components/StarRating/StarRating';
 
 function Product() {
   let { productId } = useParams();
-  let products = useOutletContext();
+  let { products, addProduct } = useOutletContext();
 
   const product = products.find((element) => element.id == productId);
   if (product == null) {
@@ -21,6 +21,13 @@ function Product() {
       <p>{description}</p>
       <StarRating rating={rating} />
       <ReviewsList reviews={reviews} />
+      <button
+        onClick={() => {
+          addProduct(productId);
+        }}
+      >
+        Add to cart
+      </button>
     </div>
   );
 }
