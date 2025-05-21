@@ -15,6 +15,7 @@ function ReviewsList({ reviews = [] }) {
 
     return (
       <div key={reviewerName}>
+        <h2>Reviews</h2>
         <span>{reviewerName}</span>
         <span>{ratingTexts[rating - 1]}</span>
         <span>{comment}</span>

@@ -25,10 +25,16 @@ function setupWithTwoReviews() {
   render(<ReviewsList reviews={reviews} />);
 }
 
-it('renders no comments header when there are no reviews', () => {
+it('renders no comments text when there are no reviews', () => {
   render(<ReviewsList />);
 
   screen.getByText(/no reviews/i);
+});
+
+it('renders a Review header', () => {
+  setupWithOneReview();
+
+  screen.getByRole('heading', { name: /reviews/i });
 });
 
 it('renders reviewer name', () => {
