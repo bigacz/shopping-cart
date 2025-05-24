@@ -8,8 +8,13 @@ import ReviewsList from 'components/ReviewsList/ReviewsList';
 import StarRating from 'components/StarRating/StarRating';
 import userEvent from '@testing-library/user-event';
 
-vi.mock('components/ReviewsList/ReviewsList');
-vi.mock('components/StarRating/StarRating');
+vi.mock('components/ReviewsList/ReviewsList', () => ({
+  default: vi.fn(() => <div data-testid="ReviewsList" />),
+}));
+
+vi.mock('components/StarRating/StarRating', () => ({
+  default: vi.fn(() => <div data-testid="StarRating" />),
+}));
 
 const products = [
   {
@@ -64,7 +69,7 @@ it('renders title ', () => {
   screen.getByRole('heading', { name: /product name/i });
 });
 
-it('render price', () => {
+it('renders price', () => {
   setupOnExisitngProduct();
 
   screen.getByText(/7.99 €/i);
@@ -76,17 +81,19 @@ it('renders description', () => {
   screen.getByText(/some description text/i);
 });
 
-it('render reviews', () => {
+it('renders reviews', () => {
   setupOnExisitngProduct();
 
+  screen.getByTestId('ReviewsList');
   expect(ReviewsList.mock.lastCall[0]).toEqual({
     reviews: 'reviewsExampleValue',
   });
 });
 
-it('render rating', () => {
+it('renders rating', () => {
   setupOnExisitngProduct();
 
+  screen.getByTestId('StarRating');
   expect(StarRating.mock.lastCall[0]).toEqual({
     rating: 3.27,
   });

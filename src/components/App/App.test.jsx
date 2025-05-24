@@ -19,7 +19,7 @@ it('renders navbar', () => {
   screen.getByTestId('navbar');
 });
 
-it('renders navbar', () => {
+it('renders footer', () => {
   render(<App />);
 
   screen.getByTestId('footer');
