@@ -8,14 +8,6 @@ import ReviewsList from 'components/ReviewsList/ReviewsList';
 import StarRating from 'components/StarRating/StarRating';
 import userEvent from '@testing-library/user-event';
 
-vi.mock('components/ReviewsList/ReviewsList', () => ({
-  default: vi.fn(() => <div data-testid="ReviewsList" />),
-}));
-
-vi.mock('components/StarRating/StarRating', () => ({
-  default: vi.fn(() => <div data-testid="StarRating" />),
-}));
-
 const products = [
   {
     id: 48,
@@ -23,7 +15,14 @@ const products = [
     description: 'some description text',
     price: 7.99,
     rating: 3.27,
-    reviews: 'reviewsExampleValue',
+    reviews: [
+      {
+        reviewerName: 'John',
+        comment: 'good',
+        date: '2025-04-30T09:41:02.053Z',
+        rating: 5,
+      },
+    ],
     images: ['https://placehold.co/600x400'],
   },
 ];
@@ -84,19 +83,17 @@ it('renders description', () => {
 it('renders reviews', () => {
   setupOnExisitngProduct();
 
-  screen.getByTestId('ReviewsList');
-  expect(ReviewsList.mock.lastCall[0]).toEqual({
-    reviews: 'reviewsExampleValue',
-  });
+  screen.getByText(/John/i);
+  screen.getByText(/loved it/i);
+  screen.getByText(/good/i);
+  screen.getByText('30/04/2025');
 });
 
 it('renders rating', () => {
   setupOnExisitngProduct();
 
-  screen.getByTestId('StarRating');
-  expect(StarRating.mock.lastCall[0]).toEqual({
-    rating: 3.27,
-  });
+  const stars = screen.queryAllByTestId('star-filled');
+  expect(stars.length).toBe(5);
 });
 
 it('renders a button that calls addProduct with current productId', async () => {

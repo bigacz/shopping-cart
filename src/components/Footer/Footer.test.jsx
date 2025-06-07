@@ -2,6 +2,12 @@ import { it } from 'vitest';
 import Footer from './Footer';
 import { render, screen } from '@testing-library/react';
 
+it('has a contentinfo wrapper', () => {
+  render(<Footer />);
+
+  screen.getByRole('contentinfo');
+});
+
 it('renders contact header', () => {
   render(<Footer />);
 

@@ -11,6 +11,12 @@ const Stub = createRoutesStub([
   },
 ]);
 
+it('has a navigation wrapper', () => {
+  render(<Stub />);
+
+  screen.getByRole('navigation');
+});
+
 it('has header that redirects to root directory', () => {
   render(<Stub />);
 
