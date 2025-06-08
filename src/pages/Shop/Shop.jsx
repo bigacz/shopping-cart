@@ -1,4 +1,4 @@
-import { useOutletContext } from 'react-router';
+import { Link, useOutletContext } from 'react-router';
 import './Shop.module.css';
 
 function Shop() {
@@ -8,11 +8,11 @@ function Shop() {
     <div>
       {products.map(({ id, title, price, images }) => {
         return (
-          <div key={id}>
+          <Link to={`/product/${id}`} key={id}>
             <img src={images[0]} alt={title} />
             <span>{title}</span>
             <span>{price}</span>
-          </div>
+          </Link>
         );
       })}
     </div>

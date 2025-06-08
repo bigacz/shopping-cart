@@ -50,6 +50,13 @@ it('renders product price', () => {
   screen.getByText('7.99');
 });
 
+it('product wrapper is a link that redirects to current product page', () => {
+  render(<Stub initialEntries={['/shop']} />);
+
+  const wrapper = screen.getByRole('link', { name: /product name 1/i });
+  expect(wrapper).toHaveAttribute('href', '/product/48');
+});
+
 it('renders multiple products', () => {
   render(<Stub initialEntries={['/shop']} />);
 
