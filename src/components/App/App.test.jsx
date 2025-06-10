@@ -1,54 +1,100 @@
-import { beforeEach, expect, it, vi } from 'vitest';
-import { act, render, screen } from '@testing-library/react';
+import { expect, it, vi } from 'vitest';
+import {
+  act,
+  getByRole,
+  getByText,
+  render,
+  screen,
+} from '@testing-library/react';
 
 import App from './App';
 import Navbar from 'components/Navbar/Navbar';
 import Footer from 'components/Footer/Footer';
-import { Outlet } from 'react-router';
+import { createRoutesStub, Outlet } from 'react-router';
+import userEvent from '@testing-library/user-event';
+import routes from 'src/routes';
+
+const products = [
+  {
+    id: 48,
+    title: 'product name',
+    description: 'some description text',
+    price: 7.99,
+    rating: 3.27,
+    reviews: [
+      {
+        reviewerName: 'John',
+        comment: 'good',
+        date: '2025-04-30T09:41:02.053Z',
+        rating: 5,
+      },
+    ],
+    images: ['https://placehold.co/600x400'],
+  },
+];
 
 global.fetch = vi.fn(() =>
-  Promise.resolve({ json: () => Promise.resolve('fetchTestValue') })
+  Promise.resolve({ json: () => Promise.resolve(products) })
 );
 
-vi.mock('react-router', () => {
-  const originalModule = vi.importActual('react-router');
+async function setup() {
+  const user = userEvent.setup();
 
-  return {
-    ...originalModule,
-    Outlet: vi.fn(),
-  };
-});
+  const Stub = createRoutesStub(routes);
 
-vi.mock('components/Footer/Footer', () => ({
-  default: () => <div data-testid="footer" />,
-}));
-
-vi.mock('components/Navbar/Navbar', () => ({
-  default: () => <div data-testid="navbar" />,
-}));
-
-it('renders navbar', async () => {
   await act(async () => {
-    render(<App />);
+    render(<Stub initialEntries={['/']} />);
   });
 
-  screen.getByTestId('navbar');
+  return { user };
+}
+
+it('renders home link in navbar', async () => {
+  const { user } = await setup();
+
+  const navbar = screen.getByRole('navigation');
+
+  const homeLink = getByRole(navbar, 'link', { name: /kitchen market/i });
+
+  await user.click(homeLink);
+
+  screen.getByRole('heading', { name: /essentials for every kitchen/i });
+});
+
+it('renders shop link in navbar', async () => {
+  const { user } = await setup();
+
+  const navbar = screen.getByRole('navigation');
+
+  const shopLink = getByRole(navbar, 'link', { name: /products/i });
+
+  await user.click(shopLink);
+
+  screen.getByText(/all products/i);
+});
+
+it('renders cart link in navbar', async () => {
+  const { user } = await setup();
+
+  const navbar = screen.getByRole('navigation');
+
+  const shopLink = getByRole(navbar, 'link', { name: /cart/i });
+
+  await user.click(shopLink);
+
+  screen.getByText(/your cart/i);
 });
 
 it('renders footer', async () => {
-  await act(async () => {
-    render(<App />);
-  });
+  const { user } = await setup();
 
-  screen.getByTestId('footer');
-});
+  const footer = screen.getByRole('contentinfo');
 
-it('renders outlet with products in context', async () => {
-  await act(async () => {
-    render(<App />);
-  });
-
-  expect(Outlet.mock.lastCall[0].context.products).toBe('fetchTestValue');
-
-  vi.restoreAllMocks();
+  getByRole(footer, 'heading', { name: /contact/i });
+  getByText(footer, /\+1 \(555\) 293-8472/i);
+  getByText(footer, /support@kitchenmarket.com/i);
+  getByRole(footer, 'heading', { name: /shipping address/i });
+  getByText(footer, /Kitchen Market Supplies Ltd./i);
+  getByText(footer, /1425 Maplewood Drive/i);
+  getByText(footer, /United States/i);
 });
