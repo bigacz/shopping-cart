@@ -2,13 +2,10 @@ import { useOutletContext, useParams } from 'react-router';
 import './Product.module.css';
 import ReviewsList from 'components/ReviewsList/ReviewsList';
 import StarRating from 'components/StarRating/StarRating';
-import { useState } from 'react';
 
 function Product() {
   const { productId } = useParams();
-  const { products, addProduct } = useOutletContext();
-
-  const [isAdded, setIsAdded] = useState(false);
+  const { products, addProduct, cart } = useOutletContext();
 
   const product = products.find((element) => element.id == productId);
   if (product == null) {
@@ -24,11 +21,10 @@ function Product() {
       <p>{description}</p>
       <StarRating rating={rating} />
       <ReviewsList reviews={reviews} />
-      {isAdded ? (
+      {!cart[productId] ? (
         <button
           onClick={() => {
             addProduct(productId);
-            setIsAdded(true);
           }}
         >
           Add to cart

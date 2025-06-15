@@ -20,10 +20,24 @@ function App() {
     fetchProducts();
   }, []);
 
+  function addProduct(id) {
+    const newCart = { ...cart };
+
+    if (!cart[id]) {
+      newCart[id] = 0;
+    }
+
+    newCart[id] += 1;
+
+    setCart(newCart);
+  }
+
+  function removeProduct(id) {}
+
   return (
     <>
       <Navbar />
-      <Outlet context={{ products }} />
+      <Outlet context={{ products, cart, addProduct, removeProduct }} />
       <Footer />
     </>
   );

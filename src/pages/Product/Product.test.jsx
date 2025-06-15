@@ -27,12 +27,14 @@ const products = [
   },
 ];
 
+const cart = {};
+
 const addProduct = vi.fn();
 
 const Stub = createRoutesStub([
   {
     path: '/',
-    Component: () => <Outlet context={{ products, addProduct }} />,
+    Component: () => <Outlet context={{ products, cart, addProduct }} />,
     children: [
       {
         path: 'product/:productId',
@@ -94,13 +96,4 @@ it('renders rating', () => {
 
   const stars = screen.queryAllByTestId('star-filled');
   expect(stars.length).toBe(5);
-});
-
-it('renders add product button that changes text when clicked', async () => {
-  const { user } = setupOnExisitngProduct();
-
-  const button = screen.getByRole('button', { name: /add to cart/i });
-  await user.click(button);
-
-  expect(button).toHaveTextContent(/added/i);
 });

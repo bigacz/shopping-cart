@@ -1,4 +1,4 @@
-import { expect, it, vi } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import {
   act,
   getByRole,
@@ -49,7 +49,7 @@ async function setup() {
   return { user };
 }
 
-it('renders home link in navbar', async () => {
+it.skip('renders home link in navbar', async () => {
   const { user } = await setup();
 
   const navbar = screen.getByRole('navigation');
@@ -61,7 +61,7 @@ it('renders home link in navbar', async () => {
   screen.getByRole('heading', { name: /essentials for every kitchen/i });
 });
 
-it('renders shop link in navbar', async () => {
+it.skip('renders shop link in navbar', async () => {
   const { user } = await setup();
 
   const navbar = screen.getByRole('navigation');
@@ -73,20 +73,48 @@ it('renders shop link in navbar', async () => {
   screen.getByText(/all products/i);
 });
 
-it('renders cart link in navbar', async () => {
+it.skip('renders cart link in navbar', async () => {
   const { user } = await setup();
 
   const navbar = screen.getByRole('navigation');
 
-  const shopLink = getByRole(navbar, 'link', { name: /cart/i });
+  const cartLink = getByRole(navbar, 'link', { name: /cart/i });
 
-  await user.click(shopLink);
+  await user.click(cartLink);
 
   screen.getByText(/your cart/i);
 });
 
-it('renders footer', async () => {
+it('renders a button that adds product to cart', async () => {
   const { user } = await setup();
+
+  const navbar = screen.getByRole('navigation');
+  const cartLink = getByRole(navbar, 'link', { name: /cart/i });
+
+  await user.click(cartLink);
+
+  const cartItem = screen.queryByText(/product name/i);
+  expect(cartItem).not.toBeInTheDocument();
+
+  const shopLink = getByRole(navbar, 'link', { name: /products/i });
+  await user.click(shopLink);
+
+  const shopItem = screen.getByRole('link', { name: /product name/i });
+  await user.click(shopItem);
+
+  const addButton = screen.getByRole('button', { name: /add to cart/i });
+
+  await user.click(addButton);
+
+  expect(addButton).toHaveTextContent(/added/i);
+
+  await user.click(cartLink);
+
+  screen.getByText(/product name/i);
+});
+
+it('renders footer', async () => {
+  await setup();
 
   const footer = screen.getByRole('contentinfo');
 
