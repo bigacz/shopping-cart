@@ -2,7 +2,7 @@ import { useOutletContext } from 'react-router';
 import './Cart.module.css';
 
 function Cart() {
-  const { products, cart } = useOutletContext();
+  const { products, cart, addProduct } = useOutletContext();
 
   return (
     <main>
@@ -10,13 +10,23 @@ function Cart() {
       {isCartEmpty(cart) ? (
         <span>Cart is empty</span>
       ) : (
-        Object.entries(cart).map(([id, amount]) => {
+        Object.entries(cart).map(([id, quantity]) => {
           const product = products.find((e) => e.id == id);
 
           return (
             <div key={id}>
               <img src={product.images[0]} alt={product.title} />
-              <span>{amount}</span>
+              <div>
+                <span>Quantity</span>
+                <span>{quantity}</span>
+                <button
+                  onClick={() => {
+                    addProduct(id);
+                  }}
+                >
+                  +
+                </button>
+              </div>
               <span>{product.title}</span>
               <span>{product.price} €</span>
             </div>

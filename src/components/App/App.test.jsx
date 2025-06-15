@@ -123,6 +123,32 @@ it('renders a button that adds product to cart', async () => {
   screen.getByText(/product name/i);
 });
 
+it('renders a button that increases product in cart', async () => {
+  const { user } = await setup();
+
+  const navbar = screen.getByRole('navigation');
+  const shopLink = getByRole(navbar, 'link', { name: /products/i });
+  const cartLink = getByRole(navbar, 'link', { name: /cart/i });
+
+  await user.click(shopLink);
+  screen.logTestingPlaygroundURL();
+  const productNameNode = screen.getByText(/product name/i);
+  await user.click(productNameNode);
+
+  const addButtonProduct = screen.getByRole('button', /add to cart/i);
+  await user.click(addButtonProduct);
+
+  await user.click(cartLink);
+
+  const quantityWrapper = screen.getByText(/quantity/i).parentElement;
+  const quantityNode = getByText(quantityWrapper, /1/i);
+
+  const addButtonCart = screen.getByRole('button', { name: /\+/i });
+  await user.click(addButtonCart);
+
+  expect(quantityNode).toHaveTextContent(2);
+});
+
 it('renders footer', async () => {
   await setup();
 

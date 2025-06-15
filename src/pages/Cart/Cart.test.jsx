@@ -118,7 +118,7 @@ it('renders product price ', () => {
   screen.getByText(/7.99 €/i);
 });
 
-it('renders product amount ', () => {
+it('renders product quantity ', () => {
   setup();
 
   screen.getByText(/2/i);
