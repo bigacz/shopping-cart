@@ -49,7 +49,7 @@ async function setup() {
   return { user };
 }
 
-it.skip('renders home link in navbar', async () => {
+it('renders home link in navbar', async () => {
   const { user } = await setup();
 
   const navbar = screen.getByRole('navigation');
@@ -61,7 +61,7 @@ it.skip('renders home link in navbar', async () => {
   screen.getByRole('heading', { name: /essentials for every kitchen/i });
 });
 
-it.skip('renders shop link in navbar', async () => {
+it('renders shop link in navbar', async () => {
   const { user } = await setup();
 
   const navbar = screen.getByRole('navigation');
@@ -73,7 +73,7 @@ it.skip('renders shop link in navbar', async () => {
   screen.getByText(/all products/i);
 });
 
-it.skip('renders cart link in navbar', async () => {
+it('renders cart link in navbar', async () => {
   const { user } = await setup();
 
   const navbar = screen.getByRole('navigation');
@@ -83,6 +83,16 @@ it.skip('renders cart link in navbar', async () => {
   await user.click(cartLink);
 
   screen.getByText(/your cart/i);
+});
+
+it('renders shop now link in home', async () => {
+  const { user } = await setup();
+
+  const link = screen.getByRole('link', { name: /shop now/i });
+
+  await user.click(link);
+
+  screen.getByText(/all products/i);
 });
 
 it('renders a button that adds product to cart', async () => {
