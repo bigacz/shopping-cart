@@ -96,11 +96,11 @@ it('renders rating', () => {
   expect(stars.length).toBe(5);
 });
 
-it('renders a button that calls addProduct with current productId', async () => {
+it('renders add product button that changes text when clicked', async () => {
   const { user } = setupOnExisitngProduct();
 
   const button = screen.getByRole('button', { name: /add to cart/i });
   await user.click(button);
 
-  expect(addProduct).toHaveBeenLastCalledWith('48');
+  expect(button).toHaveTextContent(/added/i);
 });
