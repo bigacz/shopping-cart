@@ -6,6 +6,7 @@ function Shop() {
 
   return (
     <div>
+      <span>All products</span>
       {products.map(({ id, title, price, images }) => {
         return (
           <Link to={`/product/${id}`} key={id}>

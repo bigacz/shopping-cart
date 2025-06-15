@@ -6,9 +6,9 @@ import { ShoppingCart } from 'lucide-react';
 function Navbar() {
   return (
     <nav>
-      <h1>
-        <Link to="/">Kitchen</Link>
-      </h1>
+      <h3>
+        <Link to="/">Kitchen market</Link>
+      </h3>
       <Link to="shop">Products</Link>
       <Link to="cart">
         <ShoppingCart />

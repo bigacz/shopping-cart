@@ -6,6 +6,7 @@ function Cart() {
 
   return (
     <main>
+      <span>Your cart</span>
       {isCartEmpty(cart) ? (
         <span>Cart is empty</span>
       ) : (
