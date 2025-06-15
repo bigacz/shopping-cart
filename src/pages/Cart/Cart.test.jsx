@@ -80,6 +80,32 @@ function setupWithTwoProducts() {
   return { user };
 }
 
+function setupWithZeroProducts() {
+  const user = userEvent.setup();
+
+  const cart = {};
+
+  const Stub = createRoutesStub([
+    {
+      path: '/',
+      Component: () => (
+        <Outlet context={{ products, cart, addProduct, removeProduct }} />
+      ),
+
+      children: [
+        {
+          path: 'cart',
+          Component: Cart,
+        },
+      ],
+    },
+  ]);
+
+  render(<Stub initialEntries={['/cart']} />);
+
+  return { user };
+}
+
 it('renders product name ', () => {
   setup();
 
@@ -121,4 +147,17 @@ it('renders two products', () => {
   screen.getByText(/1/i);
   const image2 = screen.getByAltText(/product name two/i);
   expect(image2).toHaveAttribute('src', 'https://placehold.co/700x500');
+});
+
+it('renders cart is empty text when cart is empty', () => {
+  setupWithZeroProducts();
+
+  screen.getByText(/cart is empty/i);
+});
+
+it('renders no products when cart is empty', () => {
+  setupWithZeroProducts();
+
+  const item = screen.queryByText(/product name/i);
+  expect(item).not.toBeInTheDocument();
 });
