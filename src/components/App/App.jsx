@@ -32,7 +32,17 @@ function App() {
     setCart(newCart);
   }
 
-  function removeProduct(id) {}
+  function removeProduct(id) {
+    const newCart = { ...cart };
+
+    if (!cart[id]) {
+      newCart[id] = 0;
+    } else {
+      newCart[id] -= 1;
+    }
+
+    setCart(newCart);
+  }
 
   return (
     <>

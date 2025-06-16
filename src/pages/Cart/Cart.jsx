@@ -2,7 +2,7 @@ import { useOutletContext } from 'react-router';
 import './Cart.module.css';
 
 function Cart() {
-  const { products, cart, addProduct } = useOutletContext();
+  const { products, cart, addProduct, removeProduct } = useOutletContext();
 
   return (
     <main>
@@ -17,6 +17,13 @@ function Cart() {
             <div key={id}>
               <img src={product.images[0]} alt={product.title} />
               <div>
+                <button
+                  onClick={() => {
+                    removeProduct(id);
+                  }}
+                >
+                  -
+                </button>
                 <span>Quantity</span>
                 <span>{quantity}</span>
                 <button

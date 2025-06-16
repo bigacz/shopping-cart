@@ -49,6 +49,23 @@ async function setup() {
   return { user };
 }
 
+async function setupWithLinks() {
+  const user = userEvent.setup();
+
+  const Stub = createRoutesStub(routes);
+
+  await act(async () => {
+    render(<Stub initialEntries={['/']} />);
+  });
+
+  const navbar = screen.getByRole('navigation');
+
+  const shopLink = getByRole(navbar, 'link', { name: /products/i });
+  const cartLink = getByRole(navbar, 'link', { name: /cart/i });
+
+  return { user, shopLink, cartLink };
+}
+
 it('renders home link in navbar', async () => {
   const { user } = await setup();
 
@@ -96,17 +113,13 @@ it('renders shop now link in home', async () => {
 });
 
 it('renders a button that adds product to cart', async () => {
-  const { user } = await setup();
-
-  const navbar = screen.getByRole('navigation');
-  const cartLink = getByRole(navbar, 'link', { name: /cart/i });
+  const { user, cartLink, shopLink } = await setupWithLinks();
 
   await user.click(cartLink);
 
   const cartItem = screen.queryByText(/product name/i);
   expect(cartItem).not.toBeInTheDocument();
 
-  const shopLink = getByRole(navbar, 'link', { name: /products/i });
   await user.click(shopLink);
 
   const shopItem = screen.getByRole('link', { name: /product name/i });
@@ -123,15 +136,10 @@ it('renders a button that adds product to cart', async () => {
   screen.getByText(/product name/i);
 });
 
-it('renders a button that increases product in cart', async () => {
-  const { user } = await setup();
-
-  const navbar = screen.getByRole('navigation');
-  const shopLink = getByRole(navbar, 'link', { name: /products/i });
-  const cartLink = getByRole(navbar, 'link', { name: /cart/i });
+it('renders a button that increases quantity of products in cart', async () => {
+  const { user, cartLink, shopLink } = await setupWithLinks();
 
   await user.click(shopLink);
-  screen.logTestingPlaygroundURL();
   const productNameNode = screen.getByText(/product name/i);
   await user.click(productNameNode);
 
@@ -147,6 +155,54 @@ it('renders a button that increases product in cart', async () => {
   await user.click(addButtonCart);
 
   expect(quantityNode).toHaveTextContent(2);
+});
+
+it('renders a button that decreases quantity of products in cart', async () => {
+  const { user, cartLink, shopLink } = await setupWithLinks();
+
+  await user.click(shopLink);
+  const productNameNode = screen.getByText(/product name/i);
+  await user.click(productNameNode);
+
+  const addButtonProduct = screen.getByRole('button', /add to cart/i);
+  await user.click(addButtonProduct);
+
+  await user.click(cartLink);
+
+  const quantityWrapper = screen.getByText(/quantity/i).parentElement;
+  const quantityNode = getByText(quantityWrapper, /1/i);
+
+  const addButtonCart = screen.getByRole('button', { name: /\+/i });
+  await user.click(addButtonCart);
+
+  expect(quantityNode).toHaveTextContent(/2/i);
+  const removeButtonCart = screen.getByRole('button', { name: /-/i });
+
+  await user.click(removeButtonCart);
+  expect(quantityNode).toHaveTextContent(/1/i);
+});
+
+it('renders a button that removes product when quantity is 1', async () => {
+  const { user, cartLink, shopLink } = await setupWithLinks();
+
+  await user.click(shopLink);
+  const productNameNode = screen.getByText(/product name/i);
+  await user.click(productNameNode);
+
+  const addButtonProduct = screen.getByRole('button', /add to cart/i);
+  await user.click(addButtonProduct);
+
+  await user.click(cartLink);
+
+  const quantityWrapper = screen.getByText(/quantity/i).parentElement;
+  const quantityNode = getByText(quantityWrapper, /1/i);
+
+  expect(quantityNode).toHaveTextContent(/1/i);
+  const removeButtonCart = screen.getByRole('button', { name: /-/i });
+
+  const productWrapper = quantityWrapper.parentElement;
+  await user.click(removeButtonCart);
+  expect(productWrapper).not.toBeInTheDocument();
 });
 
 it('renders footer', async () => {
