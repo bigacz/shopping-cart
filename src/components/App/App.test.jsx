@@ -205,6 +205,17 @@ it('renders a button that removes product when quantity is 1', async () => {
   expect(productWrapper).not.toBeInTheDocument();
 });
 
+it('calculates total price on cart page', async () => {
+  const { user, shopLink } = await setupWithLinks();
+
+  await user.click(shopLink);
+
+  const shopItem = screen.getByRole('link', { name: /product name/i });
+  await user.click(shopItem);
+
+  screen.getByText(/7.99 €/i);
+});
+
 it('renders footer', async () => {
   await setup();
 

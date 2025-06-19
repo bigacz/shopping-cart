@@ -1,7 +1,7 @@
 import userEvent from '@testing-library/user-event';
 import Cart from './Cart';
 
-import { render, screen } from '@testing-library/react';
+import { getByText, render, screen } from '@testing-library/react';
 import { Component } from 'lucide-react';
 import { createRoutesStub, Outlet } from 'react-router';
 import { expect, it, vi } from 'vitest';
@@ -51,7 +51,7 @@ function setup() {
   return { user };
 }
 
-function setupWithTwoProducts() {
+function setupTwoProducts() {
   const user = userEvent.setup();
 
   const cart = {
@@ -80,7 +80,7 @@ function setupWithTwoProducts() {
   return { user };
 }
 
-function setupWithZeroProducts() {
+function setupZeroProducts() {
   const user = userEvent.setup();
 
   const cart = {};
@@ -134,7 +134,7 @@ it('renders product image', () => {
 it('renders a button', () => {});
 
 it('renders two products', () => {
-  setupWithTwoProducts();
+  setupTwoProducts();
 
   screen.getByText(/product name one/i);
   screen.getByText(/7.99 €/i);
@@ -144,20 +144,75 @@ it('renders two products', () => {
 
   screen.getByText(/product name two/i);
   screen.getByText(/90.99 €/i);
-  screen.getByText(/1/i);
+  screen.getByText('1');
   const image2 = screen.getByAltText(/product name two/i);
   expect(image2).toHaveAttribute('src', 'https://placehold.co/700x500');
 });
 
 it('renders cart is empty text when cart is empty', () => {
-  setupWithZeroProducts();
+  setupZeroProducts();
 
   screen.getByText(/cart is empty/i);
 });
 
 it('renders no products when cart is empty', () => {
-  setupWithZeroProducts();
+  setupZeroProducts();
 
   const item = screen.queryByText(/product name/i);
   expect(item).not.toBeInTheDocument();
+});
+
+it('renders 0 in total price when nothing is in cart', () => {
+  setupZeroProducts();
+
+  screen.getByText(/total price: 0 €/i);
+});
+
+it('calculates total price when two different products are in cart', () => {
+  const cart = {
+    48: 1,
+    52: 1,
+  };
+
+  const Stub = createRoutesStub([
+    {
+      path: '/',
+      Component: () => <Outlet context={{ products, cart }} />,
+
+      children: [
+        {
+          path: 'cart',
+          Component: Cart,
+        },
+      ],
+    },
+  ]);
+
+  render(<Stub initialEntries={['/cart']} />);
+
+  screen.getByText(/total price: 98.98 €/i);
+});
+
+it('calculates total price when two same products are in cart', () => {
+  const cart = {
+    48: 2,
+  };
+
+  const Stub = createRoutesStub([
+    {
+      path: '/',
+      Component: () => <Outlet context={{ products, cart }} />,
+
+      children: [
+        {
+          path: 'cart',
+          Component: Cart,
+        },
+      ],
+    },
+  ]);
+
+  render(<Stub initialEntries={['/cart']} />);
+
+  screen.getByText(/total price: 15.98 €/i);
 });
