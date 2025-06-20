@@ -60,6 +60,7 @@ function Cart() {
       </div>
       <div>
         <span>Total price: {totalPrice} €</span>
+        <button disabled={totalPrice > 0}>Checkout</button>
       </div>
     </main>
   );

@@ -216,3 +216,16 @@ it('calculates total price when two same products are in cart', () => {
 
   screen.getByText(/total price: 15.98 €/i);
 });
+
+it('renders a checkout button when total price is greater than 0', () => {
+  setupZeroProducts();
+
+  screen.getByRole('button', { name: /checkout/i });
+});
+
+it('renders a disabled checkout button when total price is 0', () => {
+  setup();
+
+  const button = screen.getByRole('button', { name: /checkout/i });
+  expect(button).toBeDisabled();
+});
