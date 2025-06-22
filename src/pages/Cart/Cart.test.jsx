@@ -121,7 +121,7 @@ it('renders product price ', () => {
 it('renders product quantity ', () => {
   setup();
 
-  screen.getByText(/2/i);
+  screen.getByDisplayValue(/2/i);
 });
 
 it('renders product image', () => {
@@ -138,13 +138,13 @@ it('renders two products', () => {
 
   screen.getByText(/product name one/i);
   screen.getByText(/7.99 €/i);
-  screen.getByText(/2/i);
+  screen.getByDisplayValue(/2/i);
   const image1 = screen.getByAltText(/product name one/i);
   expect(image1).toHaveAttribute('src', 'https://placehold.co/600x400');
 
   screen.getByText(/product name two/i);
   screen.getByText(/90.99 €/i);
-  screen.getByText('1');
+  screen.getByDisplayValue('1');
   const image2 = screen.getByAltText(/product name two/i);
   expect(image2).toHaveAttribute('src', 'https://placehold.co/700x500');
 });

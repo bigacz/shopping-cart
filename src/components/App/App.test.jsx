@@ -1,6 +1,7 @@
 import { describe, expect, it, vi } from 'vitest';
 import {
   act,
+  getByDisplayValue,
   getByRole,
   getByText,
   render,
@@ -149,12 +150,12 @@ it('renders a button that increases quantity of products in cart', async () => {
   await user.click(cartLink);
 
   const quantityWrapper = screen.getByText(/quantity/i).parentElement;
-  const quantityNode = getByText(quantityWrapper, /1/i);
+  const quantityNode = getByDisplayValue(quantityWrapper, /1/i);
 
   const addButtonCart = screen.getByRole('button', { name: /\+/i });
   await user.click(addButtonCart);
 
-  expect(quantityNode).toHaveTextContent(2);
+  expect(quantityNode).toHaveValue(2);
 });
 
 it('renders a button that decreases quantity of products in cart', async () => {
@@ -170,16 +171,16 @@ it('renders a button that decreases quantity of products in cart', async () => {
   await user.click(cartLink);
 
   const quantityWrapper = screen.getByText(/quantity/i).parentElement;
-  const quantityNode = getByText(quantityWrapper, /1/i);
+  const quantityNode = getByDisplayValue(quantityWrapper, /1/i);
 
   const addButtonCart = screen.getByRole('button', { name: /\+/i });
   await user.click(addButtonCart);
 
-  expect(quantityNode).toHaveTextContent(/2/i);
+  expect(quantityNode).toHaveValue(2);
   const removeButtonCart = screen.getByRole('button', { name: /-/i });
 
   await user.click(removeButtonCart);
-  expect(quantityNode).toHaveTextContent(/1/i);
+  expect(quantityNode).toHaveValue(1);
 });
 
 it('renders a button that removes product when quantity is 1', async () => {
@@ -195,9 +196,9 @@ it('renders a button that removes product when quantity is 1', async () => {
   await user.click(cartLink);
 
   const quantityWrapper = screen.getByText(/quantity/i).parentElement;
-  const quantityNode = getByText(quantityWrapper, /1/i);
+  const quantityNode = getByDisplayValue(quantityWrapper, '1');
 
-  expect(quantityNode).toHaveTextContent(/1/i);
+  expect(quantityNode).toHaveValue(1);
   const removeButtonCart = screen.getByRole('button', { name: /-/i });
 
   const productWrapper = quantityWrapper.parentElement;
@@ -206,14 +207,42 @@ it('renders a button that removes product when quantity is 1', async () => {
 });
 
 it('calculates total price on cart page', async () => {
-  const { user, shopLink } = await setupWithLinks();
+  const { user, shopLink, cartLink } = await setupWithLinks();
 
   await user.click(shopLink);
 
   const shopItem = screen.getByRole('link', { name: /product name/i });
+
   await user.click(shopItem);
 
-  screen.getByText(/7.99 €/i);
+  const addButtonProduct = screen.getByRole('button', /add to cart/i);
+  await user.click(addButtonProduct);
+
+  await user.click(cartLink);
+  screen.getByText(/total price: 7.99 €/i);
+});
+
+it('renders a quantity input that changes total price', async () => {
+  const { user, shopLink, cartLink } = await setupWithLinks();
+
+  await user.click(shopLink);
+
+  const shopItem = screen.getByRole('link', { name: /product name/i });
+
+  await user.click(shopItem);
+
+  const addButtonProduct = screen.getByRole('button', /add to cart/i);
+  await user.click(addButtonProduct);
+
+  await user.click(cartLink);
+  const totalPriceNode = screen.getByText(/total price: 7.99 €/i);
+
+  const input = screen.getByRole('spinbutton');
+  expect(input).toHaveValue(1);
+
+  await user.type(input, '1');
+
+  expect(totalPriceNode).toHaveTextContent(/total price: 87.89 €/i);
 });
 
 it('renders footer', async () => {

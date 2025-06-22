@@ -20,6 +20,14 @@ function App() {
     fetchProducts();
   }, []);
 
+  function changeProductQuantity(id, quantity) {
+    const newCart = { ...cart };
+
+    newCart[id] = quantity;
+
+    setCart(newCart);
+  }
+
   function addProduct(id) {
     const newCart = { ...cart };
 
@@ -47,7 +55,15 @@ function App() {
   return (
     <>
       <Navbar />
-      <Outlet context={{ products, cart, addProduct, removeProduct }} />
+      <Outlet
+        context={{
+          products,
+          cart,
+          addProduct,
+          removeProduct,
+          changeProductQuantity,
+        }}
+      />
       <Footer />
     </>
   );

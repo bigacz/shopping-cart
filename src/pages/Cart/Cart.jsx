@@ -2,7 +2,8 @@ import { useOutletContext } from 'react-router';
 import './Cart.module.css';
 
 function Cart() {
-  const { products, cart, addProduct, removeProduct } = useOutletContext();
+  const { products, cart, addProduct, removeProduct, changeProductQuantity } =
+    useOutletContext();
 
   const cartProducts = [];
   Object.entries(cart).forEach(([id, quantity]) => {
@@ -42,7 +43,13 @@ function Cart() {
                     -
                   </button>
                   <span>Quantity</span>
-                  <span>{quantity}</span>
+                  <input
+                    type="number"
+                    value={quantity}
+                    onChange={(e) => {
+                      changeProductQuantity(id, e.target.value);
+                    }}
+                  />
                   <button
                     onClick={() => {
                       addProduct(id);
