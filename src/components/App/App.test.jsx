@@ -258,3 +258,10 @@ it('renders footer', async () => {
   getByText(footer, /1425 Maplewood Drive/i);
   getByText(footer, /United States/i);
 });
+
+it('renders error page on bad url', async () => {
+  const Stub = createRoutesStub(routes);
+  render(<Stub initialEntries={['/null']} />);
+
+  screen.getByRole('heading', { level: 2, name: /404 error/i });
+});

@@ -4,6 +4,7 @@ import Home from './pages/Home/Home';
 import Shop from './pages/Shop/Shop';
 import Cart from './pages/Cart/Cart';
 import Product from './pages/Product/Product';
+import ErrorPage from 'pages/ErrorPage/ErrorPage';
 
 const routes = [
   {
@@ -27,6 +28,7 @@ const routes = [
         Component: Product,
       },
     ],
+    ErrorBoundary: ErrorPage,
   },
 ];
 
