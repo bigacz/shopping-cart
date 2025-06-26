@@ -67,6 +67,15 @@ async function setupWithLinks() {
   return { user, shopLink, cartLink };
 }
 
+async function setupOnErrorPage() {
+  const user = userEvent.setup();
+
+  const Stub = createRoutesStub(routes);
+  render(<Stub initialEntries={['/null']} />);
+
+  return { user };
+}
+
 it('renders home link in navbar', async () => {
   const { user } = await setup();
 
@@ -260,8 +269,16 @@ it('renders footer', async () => {
 });
 
 it('renders error page on bad url', async () => {
-  const Stub = createRoutesStub(routes);
-  render(<Stub initialEntries={['/null']} />);
+  await setupOnErrorPage();
 
   screen.getByRole('heading', { level: 2, name: /404 error/i });
+});
+
+it('renders home link on error page', async () => {
+  const { user } = await setupOnErrorPage();
+
+  const homeLink = screen.getByRole('link', { name: /go home/i });
+  await user.click(homeLink);
+
+  screen.getByRole('heading', { name: /essentials for every kitchen/i });
 });
