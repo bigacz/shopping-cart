@@ -15,27 +15,36 @@ import { createRoutesStub, Outlet } from 'react-router';
 import userEvent from '@testing-library/user-event';
 import routes from 'src/routes';
 
-const products = [
-  {
-    id: 48,
-    title: 'product name',
-    description: 'some description text',
-    price: 7.99,
-    rating: 3.27,
-    reviews: [
-      {
-        reviewerName: 'John',
-        comment: 'good',
-        date: '2025-04-30T09:41:02.053Z',
-        rating: 5,
-      },
-    ],
-    images: ['https://placehold.co/600x400'],
-  },
-];
+const products = {
+  products: [
+    {
+      id: 48,
+      title: 'product name',
+      description: 'some description text',
+      price: 7.99,
+      rating: 3.27,
+      reviews: [
+        {
+          reviewerName: 'John',
+          comment: 'good',
+          date: '2025-04-30T09:41:02.053Z',
+          rating: 5,
+        },
+      ],
+      images: ['https://placehold.co/600x400'],
+    },
+  ],
+};
 
 global.fetch = vi.fn(() =>
-  Promise.resolve({ json: () => Promise.resolve(products) })
+  Promise.resolve({
+    json: () =>
+      new Promise((resolve) => {
+        setTimeout(() => {
+          resolve(products);
+        });
+      }),
+  })
 );
 
 async function setup() {

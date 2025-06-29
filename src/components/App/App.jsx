@@ -14,7 +14,7 @@ function App() {
       const request = await fetch(apiUrl);
       const json = await request.json();
 
-      setProducts(json);
+      setProducts(json.products);
     }
 
     fetchProducts();
