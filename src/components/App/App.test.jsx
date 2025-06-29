@@ -282,3 +282,12 @@ it('renders home link on error page', async () => {
 
   screen.getByRole('heading', { name: /essentials for every kitchen/i });
 });
+
+it('renders shop loading', async () => {
+  const Stub = createRoutesStub(routes);
+
+  render(<Stub initialEntries={['/shop']} />);
+
+  const node = await screen.findByText(/loading/i);
+  expect(node).toBeInTheDocument();
+});
