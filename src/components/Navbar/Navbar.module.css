@@ -1,0 +1,36 @@
+.navbar {
+  display: grid;
+  grid-template-columns: minmax(min-content, 1400px);
+  justify-content: center;
+
+  background-color: yellow;
+}
+
+.wrapper {
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-columns: 1fr 1fr max-content;
+  justify-items: start;
+}
+
+.wrapper a {
+  display: grid;
+  align-items: center;
+  padding: 0.6rem 1.3rem;
+  color: currentColor;
+  text-decoration: none;
+}
+
+.header {
+  font-size: 1.7rem;
+  display: grid;
+}
+
+.cartLink {
+  display: grid;
+  gap: 0.2rem;
+  grid-auto-flow: column;
+  align-items: center;
+
+  text-justify: center;
+}

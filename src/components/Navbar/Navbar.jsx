@@ -1,19 +1,21 @@
 import { Link } from 'react-router';
-import './Navbar.module.css';
+import styles from './Navbar.module.css';
 
 import { ShoppingCart } from 'lucide-react';
 
 function Navbar() {
   return (
-    <nav>
-      <h3>
-        <Link to="/">Kitchen market</Link>
-      </h3>
-      <Link to="shop">Products</Link>
-      <Link to="cart">
-        <ShoppingCart />
-        Cart
-      </Link>
+    <nav className={styles.navbar}>
+      <div className={styles.wrapper}>
+        <h3 className={styles.header}>
+          <Link to="/">Kitchen market</Link>
+        </h3>
+        <Link to="shop">Products</Link>
+        <Link to="cart" className={styles.cartLink}>
+          <ShoppingCart />
+          Cart
+        </Link>
+      </div>
     </nav>
   );
 }
