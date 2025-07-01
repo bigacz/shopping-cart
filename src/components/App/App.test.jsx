@@ -8,12 +8,10 @@ import {
   screen,
 } from '@testing-library/react';
 
-import App from './App';
-import Navbar from 'components/Navbar/Navbar';
-import Footer from 'components/Footer/Footer';
 import { createRoutesStub, Outlet } from 'react-router';
 import userEvent from '@testing-library/user-event';
 import routes from 'src/routes';
+import App from './App';
 
 const products = {
   products: [
@@ -281,6 +279,7 @@ it('renders error page on bad url', async () => {
   await setupOnErrorPage();
 
   screen.getByRole('heading', { level: 2, name: /404 error/i });
+  screen.getByText(/this page doesn't exist/i);
 });
 
 it('renders home link on error page', async () => {
