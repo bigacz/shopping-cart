@@ -3,6 +3,8 @@ import Footer from 'components/Footer/Footer';
 import { Outlet } from 'react-router';
 import { useEffect, useState } from 'react';
 
+import styles from './App.module.css';
+
 const apiUrl = 'https://dummyjson.com/products/category/kitchen-accessories';
 
 function App() {
@@ -54,16 +56,18 @@ function App() {
 
   return (
     <>
-      <Navbar />
-      <Outlet
-        context={{
-          products,
-          cart,
-          addProduct,
-          removeProduct,
-          changeProductQuantity,
-        }}
-      />
+      <div className={styles.heroWrapper}>
+        <Navbar />
+        <Outlet
+          context={{
+            products,
+            cart,
+            addProduct,
+            removeProduct,
+            changeProductQuantity,
+          }}
+        />
+      </div>
       <Footer />
     </>
   );

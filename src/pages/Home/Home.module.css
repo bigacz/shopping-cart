@@ -1,0 +1,23 @@
+.main {
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 24vw;
+}
+
+.wrapper {
+  display: grid;
+  justify-items: center;
+  gap: 1.5rem;
+}
+
+.link {
+  text-decoration: none;
+
+  background-color: aqua;
+  padding: 1rem 2rem;
+
+  color: currentColor;
+  font-size: 1.2rem;
+  border-radius: 4px;
+}
