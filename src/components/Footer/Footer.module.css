@@ -1,0 +1,29 @@
+.footer {
+  display: grid;
+  grid-template-columns: minmax(min-content, 1400px);
+  justify-content: center;
+
+  background-color: yellow;
+}
+
+.wrapper {
+  padding: 2rem 1rem 3rem;
+  display: grid;
+
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(1rem, 4vw, 20rem);
+}
+
+.contact {
+  gap: 0.3rem;
+  display: grid;
+  grid-auto-rows: max-content;
+  justify-content: center;
+}
+
+.address {
+  gap: 0.3rem;
+  display: grid;
+  grid-auto-rows: max-content;
+  justify-content: center;
+}
