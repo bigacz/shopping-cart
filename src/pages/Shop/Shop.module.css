@@ -1,0 +1,47 @@
+.wrapper {
+  background-color: wheat;
+  display: grid;
+  grid-template-columns: minmax(300px, 1600px);
+  justify-content: center;
+  gap: 1rem;
+  padding: 3rem 0rem;
+}
+
+.productsWrapper {
+  justify-content: center;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 300px);
+  grid-auto-rows: max-content;
+  gap: 1rem;
+}
+
+.product {
+  display: grid;
+  grid-template-rows: max-content max-content;
+  grid-template-columns: 1fr 30px;
+  background-color: antiquewhite;
+  align-items: end;
+
+  gap: 1rem;
+  padding: 0.5rem;
+
+  color: currentColor;
+  text-decoration: none;
+}
+
+.productImage {
+  grid-column: span 2;
+  max-width: 100%;
+  height: auto;
+  display: grid;
+  object-fit: cover;
+  justify-self: auto;
+}
+
+.productPrice {
+  justify-self: end;
+}
+
+.number {
+  padding-left: 5%;
+}
