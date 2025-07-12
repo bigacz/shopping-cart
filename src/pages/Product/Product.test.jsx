@@ -95,5 +95,5 @@ it('renders rating', () => {
   setupOnExisitngProduct();
 
   const stars = screen.queryAllByTestId('star-filled');
-  expect(stars.length).toBe(5);
+  expect(stars.length).toBe(3);
 });

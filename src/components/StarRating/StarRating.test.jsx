@@ -11,6 +11,8 @@ it.each([
   { rating: undefined, filled: 5 },
   { rating: 6, filled: 5 },
   { rating: 0, filled: 1 },
+  { rating: 3.55, filled: 4 },
+  { rating: 2.22, filled: 2 },
 ])(
   'displays $filled filled stars when rating is $rating',
   ({ rating, filled }) => {
@@ -30,6 +32,8 @@ it.each([
   { rating: undefined, empty: 0 },
   { rating: 6, empty: 0 },
   { rating: 0, empty: 4 },
+  { rating: 3.55, empty: 1 },
+  { rating: 2.22, empty: 3 },
 ])(
   'displays $empty empty stars when rating is $rating',
   ({ rating, empty }) => {

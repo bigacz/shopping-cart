@@ -4,15 +4,17 @@ import './StarRating.module.css';
 function StarRating({ rating }) {
   const stars = [];
 
+  const roundedRating = Math.round(rating);
+
   let filledAmount = 5;
-  if (!Number.isInteger(rating)) {
+  if (!Number.isInteger(roundedRating)) {
     filledAmount = 5;
-  } else if (rating < 1) {
+  } else if (roundedRating < 1) {
     filledAmount = 1;
-  } else if (rating > 5) {
+  } else if (roundedRating > 5) {
     filledAmount = 5;
   } else {
-    filledAmount = rating;
+    filledAmount = roundedRating;
   }
 
   for (let i = 0; i < filledAmount; i++) {
