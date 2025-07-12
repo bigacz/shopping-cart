@@ -1,0 +1,27 @@
+.wrapper {
+  display: grid;
+  grid-template-columns: min(100%, 1000px);
+  justify-content: center;
+  gap: 1rem;
+}
+
+.review {
+  padding: 1rem 1.5rem;
+  background-color: wheat;
+  display: grid;
+  grid-template-columns: 1fr max-content;
+  gap: 1rem;
+}
+
+.name {
+}
+
+.rating {
+}
+
+.comment {
+  grid-column: span 2;
+}
+
+.date {
+}

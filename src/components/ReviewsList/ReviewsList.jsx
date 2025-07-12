@@ -1,3 +1,5 @@
+import styles from './ReviewsList.module.css';
+
 function ReviewsList({ reviews = [], className }) {
   if (reviews.length === 0) {
     return <p>There are no reviews for this product</p>;
@@ -14,17 +16,23 @@ function ReviewsList({ reviews = [], className }) {
     });
 
     return (
-      <div key={reviewerName}>
-        <h2>Reviews</h2>
-        <span>{reviewerName}</span>
-        <span>{ratingTexts[rating - 1]}</span>
-        <span>{comment}</span>
-        <span>{formattedDate}</span>
+      <div key={reviewerName} className={styles.review}>
+        <span className={styles.rating}>{ratingTexts[rating - 1]}</span>
+        <span className={styles.date}>{formattedDate}</span>
+        <span className={styles.comment}>{comment}</span>
+        <span className={styles.name}>{reviewerName}</span>
       </div>
     );
   });
 
-  return <div className={className}>{reviewsElements}</div>;
+  const wrapperClasses = [styles.wrapper, className].join(' ');
+
+  return (
+    <div className={wrapperClasses}>
+      <h2>Reviews</h2>
+      {reviewsElements}
+    </div>
+  );
 }
 
 const ratingTexts = [
