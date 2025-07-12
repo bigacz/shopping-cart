@@ -1,4 +1,4 @@
-function ReviewsList({ reviews = [] }) {
+function ReviewsList({ reviews = [], className }) {
   if (reviews.length === 0) {
     return <p>There are no reviews for this product</p>;
   }
@@ -24,7 +24,7 @@ function ReviewsList({ reviews = [] }) {
     );
   });
 
-  return <div>{reviewsElements}</div>;
+  return <div className={className}>{reviewsElements}</div>;
 }
 
 const ratingTexts = [

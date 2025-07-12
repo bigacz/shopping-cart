@@ -1,7 +1,7 @@
 import { Star } from 'lucide-react';
 import styles from './StarRating.module.css';
 
-function StarRating({ rating }) {
+function StarRating({ rating, className }) {
   const stars = [];
 
   const roundedRating = Math.round(rating);
@@ -25,7 +25,9 @@ function StarRating({ rating }) {
     stars.push(<Star key={stars.length} data-testid="star-empty" />);
   }
 
-  return <div className={styles.wrapper}>{stars}</div>;
+  const wrapperClasses = [styles.wrapper, className].join(' ');
+
+  return <div className={wrapperClasses}>{stars}</div>;
 }
 
 export default StarRating;

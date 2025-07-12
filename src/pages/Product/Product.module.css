@@ -1,0 +1,48 @@
+.wrapper {
+  padding: 3rem 0;
+  background-color: aliceblue;
+  display: grid;
+  justify-content: center;
+}
+
+.product {
+  max-width: 1400px;
+  padding: 1rem;
+  display: grid;
+  grid-template-columns: 4fr 5fr;
+  grid-template-rows: auto 1fr;
+  justify-content: center;
+  gap: 4rem;
+}
+
+.productImage {
+  width: 100%;
+}
+
+.productInfo {
+  padding-top: 20vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: max-content minmax(max-content, 100px) max-content;
+}
+
+.productPrice {
+  justify-self: end;
+}
+
+.productDescription {
+  grid-column: span 2;
+}
+
+.starRating {
+  align-self: center;
+}
+
+.addButton {
+  justify-self: end;
+  padding: 0.8rem 1.5rem;
+}
+
+.reviewsList {
+  grid-column: span 2;
+}
