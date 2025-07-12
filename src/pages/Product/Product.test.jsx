@@ -73,7 +73,7 @@ it('renders title ', () => {
 it('renders price', () => {
   setupOnExisitngProduct();
 
-  screen.getByText(/7.99 €/i);
+  screen.getByText(/7.99 \$/i);
 });
 
 it('renders description', () => {

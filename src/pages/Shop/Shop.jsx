@@ -16,7 +16,7 @@ function Shop() {
                 className={styles.productImage}
               />
               <span>{title}</span>
-              <span className={styles.productPrice}>{price}</span>
+              <span className={styles.productPrice}>{price} $</span>
             </Link>
           );
         })}

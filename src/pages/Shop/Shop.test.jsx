@@ -47,7 +47,7 @@ it('renders product name', () => {
 it('renders product price', () => {
   render(<Stub initialEntries={['/shop']} />);
 
-  screen.getByText('7.99');
+  screen.getByText(/7.99 \$/i);
 });
 
 it('product wrapper is a link that redirects to current product page', () => {
@@ -64,11 +64,11 @@ it('renders multiple products', () => {
   expect(image1).toHaveAttribute('src', 'https://placehold.co/700x500');
 
   screen.getByText('product name 1');
-  screen.getByText('7.99');
+  screen.getByText(/7.99 \$/i);
 
   const image2 = screen.getByAltText('product name 2');
   expect(image2).toHaveAttribute('src', 'https://placehold.co/600x400');
 
   screen.getByText('product name 2');
-  screen.getByText('90.99');
+  screen.getByText(/90.99 \$/i);
 });

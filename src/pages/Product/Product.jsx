@@ -17,7 +17,7 @@ function Product() {
     <div>
       <img src={images[0]} alt={title} />
       <h2>{title}</h2>
-      <span>{price} €</span>
+      <span>{price} $</span>
       <p>{description}</p>
       <StarRating rating={rating} />
       <ReviewsList reviews={reviews} />
