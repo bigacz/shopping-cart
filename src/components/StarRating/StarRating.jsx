@@ -1,5 +1,5 @@
 import { Star } from 'lucide-react';
-import './StarRating.module.css';
+import styles from './StarRating.module.css';
 
 function StarRating({ rating }) {
   const stars = [];
@@ -25,7 +25,7 @@ function StarRating({ rating }) {
     stars.push(<Star key={stars.length} data-testid="star-empty" />);
   }
 
-  return <div>{stars}</div>;
+  return <div className={styles.wrapper}>{stars}</div>;
 }
 
 export default StarRating;
