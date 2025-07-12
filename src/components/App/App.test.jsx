@@ -122,7 +122,7 @@ it('renders cart link in navbar', async () => {
 it('renders shop now link in home', async () => {
   const { user } = await setup();
 
-  const link = screen.getByRole('link', { name: /shop now/i });
+  const link = await screen.findByRole('link', { name: /shop now/i });
 
   await user.click(link);
 
@@ -291,11 +291,16 @@ it('renders home link on error page', async () => {
   screen.getByRole('heading', { name: /essentials for every kitchen/i });
 });
 
-it('renders shop loading', async () => {
+it('renders loading', async () => {
   const Stub = createRoutesStub(routes);
 
-  render(<Stub initialEntries={['/shop']} />);
+  render(<Stub initialEntries={['/']} />);
 
-  const node = await screen.findByText(/loading/i);
-  expect(node).toBeInTheDocument();
+  screen.getByText(/loading/i);
+
+  const homeHeader = screen.queryByRole('heading', {
+    name: /essentials for every kitchen/i,
+  });
+
+  expect(homeHeader).not.toBeInTheDocument();
 });

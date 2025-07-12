@@ -3,6 +3,8 @@ import Footer from 'components/Footer/Footer';
 import { Outlet } from 'react-router';
 import { useEffect, useState } from 'react';
 
+import { LoaderCircle } from 'lucide-react';
+
 import styles from './App.module.css';
 
 const apiUrl = 'https://dummyjson.com/products/category/kitchen-accessories';
@@ -58,15 +60,22 @@ function App() {
     <>
       <div className={styles.heroWrapper}>
         <Navbar />
-        <Outlet
-          context={{
-            products,
-            cart,
-            addProduct,
-            removeProduct,
-            changeProductQuantity,
-          }}
-        />
+        {products == null ? (
+          <div>
+            <LoaderCircle alt="Loading" />
+            Loading
+          </div>
+        ) : (
+          <Outlet
+            context={{
+              products,
+              cart,
+              addProduct,
+              removeProduct,
+              changeProductQuantity,
+            }}
+          />
+        )}
       </div>
       <Footer />
     </>
