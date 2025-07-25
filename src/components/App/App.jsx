@@ -27,7 +27,7 @@ function App() {
   function changeProductQuantity(id, quantity) {
     const newCart = { ...cart };
 
-    newCart[id] = quantity;
+    newCart[id] = Number(quantity);
 
     setCart(newCart);
   }
