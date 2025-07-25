@@ -1,5 +1,5 @@
 import { useOutletContext } from 'react-router';
-import './Cart.module.css';
+import styles from './Cart.module.css';
 
 function Cart() {
   const { products, cart, addProduct, removeProduct, changeProductQuantity } =
@@ -14,58 +14,62 @@ function Cart() {
     }
   });
 
-  const totalPrice = cartProducts.reduce((accumulator, current) => {
-    const { price, quantity } = current;
+  const totalPrice = roundPrice(
+    cartProducts.reduce((accumulator, current) => {
+      const { price, quantity } = current;
 
-    const calculatedPrice = accumulator + price * quantity;
-    const roundedPrice = Math.round(calculatedPrice * 100) / 100;
+      return accumulator + price * quantity;
+    }, 0)
+  );
 
-    return roundedPrice;
-  }, 0);
+  let cartContent = <span>Cart is empty</span>;
+
+  if (!isCartEmpty(cart)) {
+    cartContent = cartProducts.map(({ id, images, title, quantity, price }) => {
+      return (
+        <div key={id} className={styles.product}>
+          <img src={images[0]} alt={title} className={styles.productImage} />
+          <span className={styles.productName}>{title}</span>
+          <div className={styles.quantityDisplay}>
+            <span className={styles.quantityText}>Quantity</span>
+            <button
+              onClick={() => {
+                removeProduct(id);
+              }}
+            >
+              -
+            </button>
+            <input
+              type="number"
+              value={quantity}
+              onChange={(e) => {
+                changeProductQuantity(id, e.target.value);
+              }}
+              className={styles.quantityInput}
+            />
+            <button
+              onClick={() => {
+                addProduct(id);
+              }}
+            >
+              +
+            </button>
+          </div>
+          <span className={styles.productPrice}>
+            {roundPrice(price * quantity)} €
+          </span>
+        </div>
+      );
+    });
+  }
 
   return (
-    <main>
-      <span>Your cart</span>
-      <div>
-        {isCartEmpty(cart) ? (
-          <span>Cart is empty</span>
-        ) : (
-          cartProducts.map(({ id, images, title, quantity, price }) => {
-            return (
-              <div key={id}>
-                <img src={images[0]} alt={title} />
-                <div>
-                  <button
-                    onClick={() => {
-                      removeProduct(id);
-                    }}
-                  >
-                    -
-                  </button>
-                  <span>Quantity</span>
-                  <input
-                    type="number"
-                    value={quantity}
-                    onChange={(e) => {
-                      changeProductQuantity(id, e.target.value);
-                    }}
-                  />
-                  <button
-                    onClick={() => {
-                      addProduct(id);
-                    }}
-                  >
-                    +
-                  </button>
-                </div>
-                <span>{title}</span>
-                <span>{price} €</span>
-              </div>
-            );
-          })
-        )}
+    <main className={styles.main}>
+      <div className={styles.cartContent}>
+        <span>Your cart</span>
+        {cartContent}
       </div>
-      <div>
+      <div className={styles.cartSummary}>
         <span>Total price: {totalPrice} €</span>
         <button disabled={totalPrice > 0}>Checkout</button>
       </div>
@@ -85,4 +89,9 @@ function isCartEmpty(cart) {
   });
 
   return isEmpty;
+}
+
+function roundPrice(price) {
+  const roundedPrice = Math.round(price * 100) / 100;
+  return roundedPrice.toFixed(2);
 }

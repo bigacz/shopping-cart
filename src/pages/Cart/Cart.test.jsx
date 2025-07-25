@@ -115,7 +115,8 @@ it('renders product name ', () => {
 it('renders product price ', () => {
   setup();
 
-  screen.getByText(/7.99 €/i);
+  const prices = screen.getAllByText(/15.98 €/i);
+  expect(prices.length).toBe(2);
 });
 
 it('renders product quantity ', () => {
@@ -137,7 +138,7 @@ it('renders two products', () => {
   setupTwoProducts();
 
   screen.getByText(/product name one/i);
-  screen.getByText(/7.99 €/i);
+  screen.getByText(/15.98 €/i);
   screen.getByDisplayValue(/2/i);
   const image1 = screen.getByAltText(/product name one/i);
   expect(image1).toHaveAttribute('src', 'https://placehold.co/600x400');
@@ -165,7 +166,7 @@ it('renders no products when cart is empty', () => {
 it('renders 0 in total price when nothing is in cart', () => {
   setupZeroProducts();
 
-  screen.getByText(/total price: 0 €/i);
+  screen.getByText(/total price: 0.00 €/i);
 });
 
 it('calculates total price when two different products are in cart', () => {
