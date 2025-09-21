@@ -3,11 +3,10 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-
-  font-size: large;
 }
 
 body {
+  font-family: 'Merriweather';
   padding: 0;
   margin: 0;
 }

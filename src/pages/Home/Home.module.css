@@ -3,21 +3,35 @@
   justify-content: center;
   align-items: center;
   padding-bottom: 22vh;
+  background-image: url(../../assets/images/home-background.jpg);
+  background-size: cover;
+  background-position: bottom right;
 }
 
 .wrapper {
   display: grid;
   justify-items: center;
   gap: 1.5rem;
+
+  color: var(--cl-white);
+}
+
+.wrapper h1 {
+  text-shadow: rgb(44, 44, 44) 0 0 50px;
+  font-size: 3rem;
+}
+
+.wrapper h2 {
+  text-shadow: rgb(54, 54, 54) 0 0 15px;
 }
 
 .link {
   text-decoration: none;
 
-  background-color: aqua;
   padding: 1rem 2rem;
 
-  color: currentColor;
+  background-color: white;
+  color: black;
   font-size: 1.2rem;
   border-radius: 4px;
 }
