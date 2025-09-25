@@ -61,9 +61,11 @@ function App() {
       <div className={styles.heroWrapper}>
         <Navbar />
         {products == null ? (
-          <div>
-            <LoaderCircle alt="Loading" />
-            Loading
+          <div className={styles.loadingWrapper}>
+            <div className={styles.loadingContainer}>
+              Loading
+              <LoaderCircle size="" alt="Loading" />
+            </div>
           </div>
         ) : (
           <Outlet

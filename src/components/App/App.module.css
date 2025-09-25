@@ -3,3 +3,43 @@
   display: grid;
   grid-template-rows: max-content 1fr;
 }
+
+.loadingWrapper {
+  display: grid;
+  grid-template-rows: 2fr max-content 3fr;
+  grid-template-columns: 1fr;
+
+  justify-items: center;
+
+  grid-template-areas:
+    '.'
+    'loader'
+    '.';
+}
+
+.loadingContainer {
+  grid-area: loader;
+  display: grid;
+  grid-template-columns: max-content 1lh;
+  align-content: center;
+  gap: 0.4rem;
+
+  font-size: 1.8rem;
+}
+
+.loadingContainer svg {
+  animation: infinite spin 1s linear;
+
+  width: 100%;
+  height: auto;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
