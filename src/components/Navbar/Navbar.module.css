@@ -2,8 +2,11 @@
   display: grid;
   grid-template-columns: minmax(min-content, 1400px);
   justify-content: center;
+  color: var(--cl-white);
 
-  background-color: yellow;
+  position: sticky;
+  background-color: var(--color-accent-1);
+  font-weight: 600;
 }
 
 .wrapper {

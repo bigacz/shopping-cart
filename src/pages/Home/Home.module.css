@@ -23,6 +23,7 @@
 
 .wrapper h2 {
   text-shadow: rgb(54, 54, 54) 0 0 15px;
+  font-weight: 500;
 }
 
 .link {

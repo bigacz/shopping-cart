@@ -1,5 +1,5 @@
 .wrapper {
-  background-color: wheat;
+  background-color: var(--cl-white);
   display: grid;
   grid-template-columns: minmax(300px, 1600px);
   justify-content: center;
@@ -19,7 +19,6 @@
   display: grid;
   grid-template-rows: max-content max-content;
   grid-template-columns: 1fr max-content;
-  background-color: antiquewhite;
   align-items: end;
 
   gap: 1rem;
@@ -30,6 +29,7 @@
 }
 
 .productImage {
+  border: 1px solid rgb(83, 83, 83);
   grid-column: span 2;
   max-width: 100%;
   height: auto;

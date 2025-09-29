@@ -1,6 +1,6 @@
 .wrapper {
   padding: 3rem 0;
-  background-color: aliceblue;
+  background-color: var(--cl-white);
   display: grid;
   justify-content: center;
 }
