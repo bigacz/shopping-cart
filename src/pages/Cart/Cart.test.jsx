@@ -115,7 +115,7 @@ it('renders product name ', () => {
 it('renders product price ', () => {
   setup();
 
-  const prices = screen.getAllByText(/15.98 €/i);
+  const prices = screen.getAllByText(/15.98 \$/i);
   expect(prices.length).toBe(2);
 });
 
@@ -138,13 +138,13 @@ it('renders two products', () => {
   setupTwoProducts();
 
   screen.getByText(/product name one/i);
-  screen.getByText(/15.98 €/i);
+  screen.getByText(/15.98 \$/i);
   screen.getByDisplayValue(/2/i);
   const image1 = screen.getByAltText(/product name one/i);
   expect(image1).toHaveAttribute('src', 'https://placehold.co/600x400');
 
   screen.getByText(/product name two/i);
-  screen.getByText(/90.99 €/i);
+  screen.getByText(/90.99 \$/i);
   screen.getByDisplayValue('1');
   const image2 = screen.getByAltText(/product name two/i);
   expect(image2).toHaveAttribute('src', 'https://placehold.co/700x500');
@@ -166,7 +166,7 @@ it('renders no products when cart is empty', () => {
 it('renders 0 in total price when nothing is in cart', () => {
   setupZeroProducts();
 
-  screen.getByText(/total price: 0.00 €/i);
+  screen.getByText(/total price: 0.00 \$/i);
 });
 
 it('calculates total price when two different products are in cart', () => {
@@ -191,7 +191,7 @@ it('calculates total price when two different products are in cart', () => {
 
   render(<Stub initialEntries={['/cart']} />);
 
-  screen.getByText(/total price: 98.98 €/i);
+  screen.getByText(/total price: 98.98 \$/i);
 });
 
 it('calculates total price when two same products are in cart', () => {
@@ -215,7 +215,7 @@ it('calculates total price when two same products are in cart', () => {
 
   render(<Stub initialEntries={['/cart']} />);
 
-  screen.getByText(/total price: 15.98 €/i);
+  screen.getByText(/total price: 15.98 \$/i);
 });
 
 it('renders an enabled checkout button when total price is greater than 0', () => {

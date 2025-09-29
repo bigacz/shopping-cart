@@ -1,5 +1,6 @@
 import { useOutletContext } from 'react-router';
 import styles from './Cart.module.css';
+import { ShoppingCartIcon } from 'lucide-react';
 
 function Cart() {
   const { products, cart, addProduct, removeProduct, changeProductQuantity } =
@@ -56,7 +57,7 @@ function Cart() {
             </button>
           </div>
           <span className={styles.productPrice}>
-            {roundPrice(price * quantity)} €
+            {roundPrice(price * quantity)} $
           </span>
         </div>
       );
@@ -69,9 +70,16 @@ function Cart() {
         <span>Your cart</span>
         {cartContent}
       </div>
-      <div className={styles.cartSummary}>
-        <span>Total price: {totalPrice} €</span>
-        <button disabled={totalPrice > 0}>Checkout</button>
+      <div className={styles.cartSummaryWrapper}>
+        <div className={styles.cartSummary}>
+          <span>Total price: {totalPrice} $</span>
+          <button
+            className={styles.checkoutButton}
+            disabled={Number(totalPrice) <= 0}
+          >
+            Checkout
+          </button>
+        </div>
       </div>
     </main>
   );

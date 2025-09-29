@@ -235,7 +235,7 @@ it('calculates total price on cart page', async () => {
   await user.click(addButtonProduct);
 
   await user.click(cartLink);
-  screen.getByText(/total price: 7.99 €/i);
+  screen.getByText(/total price: 7.99 \$/i);
 });
 
 it('renders a quantity input that changes total price', async () => {
@@ -251,14 +251,14 @@ it('renders a quantity input that changes total price', async () => {
   await user.click(addButtonProduct);
 
   await user.click(cartLink);
-  const totalPriceNode = screen.getByText(/total price: 7.99 €/i);
+  const totalPriceNode = screen.getByText(/total price: 7.99 \$/i);
 
   const input = screen.getByRole('spinbutton');
   expect(input).toHaveValue(1);
 
   await user.type(input, '1');
 
-  expect(totalPriceNode).toHaveTextContent(/total price: 87.89 €/i);
+  expect(totalPriceNode).toHaveTextContent(/total price: 87.89 \$/i);
 });
 
 it('renders footer', async () => {
