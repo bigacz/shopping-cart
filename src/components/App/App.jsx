@@ -2,6 +2,7 @@ import Navbar from 'components/Navbar/Navbar';
 import Footer from 'components/Footer/Footer';
 import { Outlet } from 'react-router';
 import { useEffect, useState } from 'react';
+import { ScrollRestoration } from 'react-router';
 
 import { LoaderCircle } from 'lucide-react';
 
@@ -58,13 +59,14 @@ function App() {
 
   return (
     <>
+      <ScrollRestoration />
       <div className={styles.heroWrapper}>
         <Navbar />
         {products == null ? (
           <div className={styles.loadingWrapper}>
             <div className={styles.loadingContainer}>
               Loading
-              <LoaderCircle size="" alt="Loading" />
+              <LoaderCircle size="2" alt="Loading" />
             </div>
           </div>
         ) : (
