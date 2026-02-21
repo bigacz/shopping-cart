@@ -4,8 +4,7 @@
   display: grid;
   grid-template-columns: minmax(200px, 600px) minmax(200px, 400px);
 
-  /* gap: min(20vw, 480px); */
-  gap: clamp(100px, 20vw, 480px);
+  gap: clamp(50px, 10vw, 480px);
   justify-content: center;
 
   background-color: var(--cl-white);
@@ -14,6 +13,7 @@
 .cartContent {
   display: grid;
   grid-auto-rows: max-content;
+  grid-template-columns: max-content;
 
   gap: 1rem;
 }
@@ -22,32 +22,48 @@
   padding: 0.5rem;
   gap: 0.5rem;
   background-color: var(--cl-gray);
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+  box-shadow:
+    0 1px 1px 0 rgba(0, 0, 0, 0.1),
+    0 1px 2px -1px rgba(0, 0, 0, 0.1);
   display: grid;
-  grid-template-columns: minmax(5rem, 10rem) 1fr 1fr 5rem;
-  grid-template-rows: max-content;
+  grid-template-columns: minmax(5rem, 10rem) 1fr minmax(5em, max-content);
+  grid-template-rows: 1fr 1fr;
+
   align-items: center;
+
+  grid-template-areas:
+    'image name name'
+    'image display price';
 }
 
 .productImage {
-  height: auto;
+  grid-area: image;
   width: 100%;
-  /* height: 100px; */
 }
 
 .productName {
-  justify-self: center;
+  grid-area: name;
+  font-size: 1.1rem;
 }
 
 .productPrice {
+  grid-area: price;
   justify-self: center;
+  white-space: nowrap;
+  align-self: start;
+  font-size: 1.1rem;
+  align-self: flex-end;
 }
 
 .quantityDisplay {
+  grid-area: display;
   display: grid;
   grid-template-rows: max-content 2.2rem;
   grid-template-columns: 2.2rem 4rem 2.2rem;
   column-gap: 0rem;
+  row-gap: 3px;
+  align-self: center;
+  padding: 0 2rem;
 }
 
 .quantityText {
@@ -60,10 +76,43 @@
   -webkit-appearance: none;
 }
 
+:root {
+  --border: 1.3px solid rgb(58, 58, 58);
+}
+
 .quantityInput {
   appearance: none;
   -moz-appearance: none;
   text-align: center;
+  border: none;
+  border-top: var(--border);
+  border-bottom: var(--border);
+
+  background-color: white;
+  color: black;
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+.quantityButtonLeft,
+.quantityButtonRight {
+  --radius: 2px;
+  color: var(--radius);
+  font-family: Helvetica;
+  font-weight: 200;
+  border: var(--border);
+  background-color: white;
+  display: grid;
+  justify-content: center;
+  align-items: center;
+}
+
+.quantityButtonLeft {
+  border-radius: var(--radius) 0px 0px var(--radius);
+}
+
+.quantityButtonRight {
+  border-radius: 0px var(--radius) var(--radius) 0px;
 }
 
 .cartSummaryWrapper {

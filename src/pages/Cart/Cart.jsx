@@ -1,6 +1,7 @@
 import { useOutletContext } from 'react-router';
 import styles from './Cart.module.css';
 import { ShoppingCartIcon } from 'lucide-react';
+import { Plus as IconPlus, Minus as IconMinus } from 'lucide-react';
 
 function Cart() {
   const { products, cart, addProduct, removeProduct, changeProductQuantity } =
@@ -20,7 +21,7 @@ function Cart() {
       const { price, quantity } = current;
 
       return accumulator + price * quantity;
-    }, 0)
+    }, 0),
   );
 
   let cartContent = <span>Cart is empty</span>;
@@ -29,16 +30,17 @@ function Cart() {
     cartContent = cartProducts.map(({ id, images, title, quantity, price }) => {
       return (
         <div key={id} className={styles.product}>
-          <img src={images[0]} alt={title} className={styles.productImage} />
           <span className={styles.productName}>{title}</span>
+          <img src={images[0]} alt={title} className={styles.productImage} />
           <div className={styles.quantityDisplay}>
             <span className={styles.quantityText}>Quantity</span>
             <button
               onClick={() => {
                 removeProduct(id);
               }}
+              className={styles.quantityButtonLeft}
             >
-              -
+              <IconMinus size={24} strokeWidth={1.8} />
             </button>
             <input
               type="number"
@@ -52,8 +54,9 @@ function Cart() {
               onClick={() => {
                 addProduct(id);
               }}
+              className={styles.quantityButtonRight}
             >
-              +
+              <IconPlus size={26} strokeWidth={1.6} />
             </button>
           </div>
           <span className={styles.productPrice}>
