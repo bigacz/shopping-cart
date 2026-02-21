@@ -1,0 +1,7 @@
+.wrapper {
+  display: grid;
+  justify-items: center;
+  align-content: center;
+  grid-auto-rows: max-content;
+  padding-bottom: 20vh;
+}

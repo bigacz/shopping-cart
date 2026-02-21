@@ -1,5 +1,7 @@
 import Navbar from 'components/Navbar/Navbar';
 import Footer from 'components/Footer/Footer';
+import ErrorPage from 'pages/ErrorPage/ErrorPage';
+
 import { Outlet } from 'react-router';
 import { useEffect, useState } from 'react';
 import { ScrollRestoration } from 'react-router';
@@ -13,13 +15,18 @@ const apiUrl = 'https://dummyjson.com/products/category/kitchen-accessories';
 function App() {
   const [products, setProducts] = useState();
   const [cart, setCart] = useState({});
+  const [fetchError, setFetchError] = useState(null);
 
   useEffect(() => {
     async function fetchProducts() {
-      const request = await fetch(apiUrl);
-      const json = await request.json();
+      try {
+        const request = await fetch(apiUrl);
+        const json = await request.json();
 
-      setProducts(json.products);
+        setProducts(json.products);
+      } catch (error) {
+        setFetchError(error);
+      }
     }
 
     fetchProducts();
@@ -55,6 +62,10 @@ function App() {
     }
 
     setCart(newCart);
+  }
+
+  if (fetchError) {
+    return <ErrorPage />;
   }
 
   return (

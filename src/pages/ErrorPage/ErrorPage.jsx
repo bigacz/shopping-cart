@@ -1,11 +1,11 @@
-import './ErrorPage.module.css';
+import styles from './ErrorPage.module.css';
 import { Link, useRouteError } from 'react-router';
 
 function ErrorPage() {
   const error = useRouteError();
 
   return (
-    <div>
+    <div className={styles.wrapper}>
       {error?.status == 404 ? (
         <>
           <h2>404 Error</h2>
