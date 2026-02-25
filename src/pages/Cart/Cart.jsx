@@ -35,12 +35,13 @@ function Cart() {
           <div className={styles.quantityDisplay}>
             <span className={styles.quantityText}>Quantity</span>
             <button
+              aria-label="remove"
               onClick={() => {
                 removeProduct(id);
               }}
               className={styles.quantityButtonLeft}
             >
-              <IconMinus size={24} strokeWidth={1.8} />
+              <IconMinus title="remove" size={24} strokeWidth={1.8} />
             </button>
             <input
               type="number"
@@ -51,12 +52,13 @@ function Cart() {
               className={styles.quantityInput}
             />
             <button
+              aria-label="add"
               onClick={() => {
                 addProduct(id);
               }}
               className={styles.quantityButtonRight}
             >
-              <IconPlus size={26} strokeWidth={1.6} />
+              <IconPlus title="add" size={26} strokeWidth={1.6} />
             </button>
           </div>
           <span className={styles.productPrice}>

@@ -8,7 +8,7 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "test": "vitest"
+    "test": "vitest --clearScreen"
   },
   "dependencies": {
     "@testing-library/user-event": "^14.6.1",

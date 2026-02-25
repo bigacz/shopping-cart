@@ -8,7 +8,7 @@ import {
   screen,
 } from '@testing-library/react';
 
-import { createRoutesStub, Outlet } from 'react-router';
+import { createRoutesStub, ScrollRestoration } from 'react-router';
 import userEvent from '@testing-library/user-event';
 import routes from 'src/routes';
 import App from './App';
@@ -34,6 +34,11 @@ const products = {
   ],
 };
 
+vi.mock('react-router', async (importOriginal) => ({
+  ...(await importOriginal()),
+  ScrollRestoration: vi.fn(),
+}));
+
 global.fetch = vi.fn(() =>
   Promise.resolve({
     json: () =>
@@ -42,7 +47,7 @@ global.fetch = vi.fn(() =>
           resolve(products);
         });
       }),
-  })
+  }),
 );
 
 async function setup() {
@@ -168,7 +173,7 @@ it('renders a button that increases quantity of products in cart', async () => {
   const quantityWrapper = screen.getByText(/quantity/i).parentElement;
   const quantityNode = getByDisplayValue(quantityWrapper, /1/i);
 
-  const addButtonCart = screen.getByRole('button', { name: /\+/i });
+  const addButtonCart = screen.getByRole('button', { name: /add/i });
   await user.click(addButtonCart);
 
   expect(quantityNode).toHaveValue(2);
@@ -189,11 +194,11 @@ it('renders a button that decreases quantity of products in cart', async () => {
   const quantityWrapper = screen.getByText(/quantity/i).parentElement;
   const quantityNode = getByDisplayValue(quantityWrapper, /1/i);
 
-  const addButtonCart = screen.getByRole('button', { name: /\+/i });
+  const addButtonCart = screen.getByRole('button', { name: /add/i });
   await user.click(addButtonCart);
 
   expect(quantityNode).toHaveValue(2);
-  const removeButtonCart = screen.getByRole('button', { name: /-/i });
+  const removeButtonCart = screen.getByRole('button', { name: /remove/i });
 
   await user.click(removeButtonCart);
   expect(quantityNode).toHaveValue(1);
@@ -215,7 +220,7 @@ it('renders a button that removes product when quantity is 1', async () => {
   const quantityNode = getByDisplayValue(quantityWrapper, '1');
 
   expect(quantityNode).toHaveValue(1);
-  const removeButtonCart = screen.getByRole('button', { name: /-/i });
+  const removeButtonCart = screen.getByRole('button', { name: /remove/i });
 
   const productWrapper = quantityWrapper.parentElement;
   await user.click(removeButtonCart);
