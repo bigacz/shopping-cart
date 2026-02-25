@@ -12,9 +12,13 @@ function Navbar({ itemCount }) {
         </h3>
         <Link to="shop">Products</Link>
         <Link to="cart" className={styles.cartLink}>
-          <span aria-label="item count">{itemCount}</span>
-          <ShoppingCart />
-          Cart
+          <div className={styles.iconWrapper}>
+            <span aria-label="item count" className={styles.itemCount}>
+              {itemCount}
+            </span>
+            <ShoppingCart />
+          </div>
+          <span>Cart</span>
         </Link>
       </div>
     </nav>

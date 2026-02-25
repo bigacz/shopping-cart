@@ -37,3 +37,18 @@
 
   text-justify: center;
 }
+
+.iconWrapper {
+  position: relative;
+}
+
+.itemCount {
+  font-size: 0.7rem;
+  position: absolute;
+  top: 50%;
+  left: 3%;
+
+  background-color: rgb(15, 15, 15);
+  padding: 1px 3px;
+  border-radius: 5px;
+}
