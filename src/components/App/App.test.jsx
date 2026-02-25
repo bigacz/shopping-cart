@@ -148,7 +148,6 @@ it('renders a button that adds product to cart', async () => {
   await user.click(shopItem);
 
   const addButton = screen.getByRole('button', { name: /add to cart/i });
-
   await user.click(addButton);
 
   expect(addButton).toHaveTextContent(/added/i);
@@ -308,4 +307,48 @@ it('renders loading', async () => {
   });
 
   expect(homeHeader).not.toBeInTheDocument();
+});
+
+it('renders item count in navbar', async () => {
+  const { user, shopLink } = await setupWithLinks();
+
+  await user.click(shopLink);
+
+  const itemCount = screen.getByRole('generic', { name: /item count/i });
+  expect(itemCount).toHaveTextContent(/0/i);
+
+  const shopItem = screen.getByRole('link', { name: /product name/i });
+  await user.click(shopItem);
+
+  const addButton = screen.getByRole('button', { name: /add to cart/i });
+  await user.click(addButton);
+
+  expect(itemCount).toHaveTextContent(/1/i);
+});
+
+it('item count changes on change in cart', async () => {
+  const { user, cartLink, shopLink } = await setupWithLinks();
+
+  await user.click(shopLink);
+
+  const itemCount = screen.getByRole('generic', { name: /item count/i });
+  expect(itemCount).toHaveTextContent(/0/i);
+
+  const shopItem = screen.getByRole('link', { name: /product name/i });
+  await user.click(shopItem);
+
+  const addButton = screen.getByRole('button', { name: /add to cart/i });
+  await user.click(addButton);
+
+  expect(itemCount).toHaveTextContent(/1/i);
+
+  await user.click(cartLink);
+
+  const addButtonCart = screen.getByRole('button', { name: /add/i });
+  await user.click(addButtonCart);
+  expect(itemCount).toHaveTextContent(/2/i);
+
+  const removeButtonCart = screen.getByRole('button', { name: /remove/i });
+  await user.click(removeButtonCart);
+  expect(itemCount).toHaveTextContent(/1/i);
 });

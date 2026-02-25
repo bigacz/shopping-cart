@@ -72,7 +72,7 @@ function App() {
     <>
       <ScrollRestoration />
       <div className={styles.heroWrapper}>
-        <Navbar />
+        <Navbar itemCount={calculateCartCount(cart)} />
         {products == null ? (
           <div className={styles.loadingWrapper}>
             <div className={styles.loadingContainer}>
@@ -98,3 +98,10 @@ function App() {
 }
 
 export default App;
+
+function calculateCartCount(cart) {
+  return Object.values(cart).reduce(
+    (accumulator, current) => accumulator + Number(current),
+    0,
+  );
+}
